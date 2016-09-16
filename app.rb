@@ -1,6 +1,6 @@
 # app.rb
 require 'sinatra'
-require_relative './lib/video_worker'
+require_relative './lib/video/worker'
 
 get('/') { 'Plex Importer, bitch !' }
 
