@@ -3,7 +3,9 @@ require 'sidekiq'
 require 'fileutils'
 require 'temp_folder'
 require 'video/importer'
+require 'video/importer/youtube'
 require 'video/storage'
+require 'video/storage/file'
 
 class Video
   # Worker in charge of draining and saving videos

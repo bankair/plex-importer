@@ -14,7 +14,7 @@ class Video
         candidates.first
       end
 
-      quacks_like_a! VideoImporter
+      quacks_like_a! Video::Importer
     end
   end
 end
