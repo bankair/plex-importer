@@ -54,7 +54,7 @@ class Video
     def importer_for(url)
       # Quite lame, but that's a start
       self.class.importers.each do |token, importer|
-        return importer if url.index(token)
+        return importer if url.index(String(token))
       end
       raise 'Importer not found'
     end
