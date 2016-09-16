@@ -1,4 +1,7 @@
 # app.rb
+#
+$LOAD_PATH.unshift('lib')
+
 require 'sinatra'
 require_relative './lib/video/worker'
 
