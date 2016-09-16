@@ -17,7 +17,7 @@ class TempFolder
     end
 
     def default_root=(pathname_or_str)
-      @default_root = Pathname.new(pathname_or_str).freeze
+      @default_root = Pathname.new(pathname_or_str).realpath.freeze
     end
 
     private
