@@ -2,7 +2,7 @@ require 'sidekiq'
 require 'securerandom'
 require 'fileutils'
 
-class VideoWorker
+class Video::Worker
   include Sidekiq::Worker
 
   def perform(encoded_url)
