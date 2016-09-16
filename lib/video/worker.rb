@@ -20,6 +20,12 @@ class Video
 
       private
 
+      ROOT_KEY = 'VIDEO_STORAGE_LOCAL_ROOT'
+
+      def root
+        @root ||= (ENV[ROOT_KEY] || raise("Missing env var #{ROOT_KEY}"))
+      end
+
       def storage_impl
         require 'video/storage'
         require 'video/storage/file'
@@ -35,8 +41,6 @@ class Video
       end
     end
 
-    ROOT_KEY = 'VIDEO_STORAGE_LOCAL_ROOT'
-    ROOT = ENV[ROOT_KEY] || raise("Missing env var #{ROOT_KEY}")
 
     def perform(url)
       puts "Trying to retrieve url #{url}"
