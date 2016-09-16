@@ -4,6 +4,7 @@ $LOAD_PATH.unshift(Pathname.new(Dir.pwd) + 'lib')
 require 'sidekiq'
 require 'fileutils'
 require 'temp_folder'
+require 'video'
 
 class Video
   # Worker in charge of draining and saving videos
