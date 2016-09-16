@@ -1,23 +1,34 @@
+# frozen_string_literal: true
 require 'sidekiq'
-require 'securerandom'
 require 'fileutils'
+require 'temp_folder'
 
-class Video::Worker
-  include Sidekiq::Worker
+class Video
+  # Worker in charge of draining and saving videos
+  class Worker
+    include Sidekiq::Worker
 
-  def perform(encoded_url)
-    puts "Trying to retrieve url #{encoded_url}"
-    tmp_dir = SecureRandom.uuid
-    Dir.mkdir(tmp_dir)
-    Dir.chdir(tmp_dir) do
-      puts `youtube-dl #{encoded_url}`
-      candidates = Dir['*']
-      if candidates.size != 1
-        puts "Could not select candidates in #{candidates.inspect}"
-      else
-        FileUtils.mv(candidates.first, '/var/lib/plexmediaserver/Test/')
+    ROOT_KEY = 'VIDEO_STORAGE_LOCAL_ROOT'
+    ROOT = ENV[ROOT_KEY] || raise("Missing env var #{ROOT_KEY}")
+    STORAGE = Video::Storage::File.new(ROOT).as_a(Video::Storage)
+
+    def perform(url)
+      puts "Trying to retrieve url #{url}"
+      TempFolder.host_process('./tmp') do
+        STORAGE.process(Video.new(importer_for(url).process(url)))
       end
     end
-    FileUtils.rm_rf(tmp_dir)
+
+    private
+
+    IMPORTERS = {
+      youtube: Video::Importer::Youtube.new.as_a(Video::Importer)
+    }.freeze
+
+    def importer_for(url)
+      # Quite lame, but that's a start
+      IMPORTERS.each { |token, importer| return importer if url.index(token) }
+      raise 'Importer not found'
+    end
   end
 end
