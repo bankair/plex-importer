@@ -29,7 +29,7 @@ class Video
       def storage_impl
         require 'video/storage'
         require 'video/storage/file'
-        Video::Storage::File.new(ROOT).as_a(Video::Storage).freeze
+        Video::Storage::File.new(root).as_a(Video::Storage).freeze
       end
 
       def importers_impl
