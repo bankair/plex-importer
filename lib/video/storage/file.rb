@@ -8,7 +8,7 @@ class Video
     # Local file video storage
     class File
       def initialize(root_path)
-        @root_path = Pathname.new(root_path)
+        @root_path = Pathname.new(root_path).realpath
         raise "#{@root_path} is not a directory" unless @root_path.directory?
       end
 

@@ -8,7 +8,7 @@ class Video
       class ImportError < StandardError; end
 
       def process(url)
-        output = `youtube-dl #{url}`
+        output = `youtube-dl '#{url}'`
         candidates = Dir['*']
         raise ImportError, output if candidates.size != 1
         candidates.first
