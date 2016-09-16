@@ -45,7 +45,9 @@ class Video
     def perform(url)
       puts "Trying to retrieve url #{url}"
       TempFolder.host_process('./tmp') do
-        self.class.storage.process(Video.new(importer_for(url).process(url)))
+        path = importer_for(url).process(url)
+        video = Video.new(path)
+        self.class.storage.process(video)
       end
     end
 
