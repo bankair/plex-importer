@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-$LOAD_PATH.unshift('lib')
+$LOAD_PATH.unshift(Pathname.new(Dir.pwd) + 'lib')
 
 require 'sidekiq'
 require 'fileutils'
