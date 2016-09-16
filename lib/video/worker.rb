@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+$LOAD_PATH.unshift('lib')
+
 require 'sidekiq'
 require 'fileutils'
 require 'temp_folder'
